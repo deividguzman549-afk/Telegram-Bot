@@ -1,11 +1,21 @@
-from telegram import Update
-from telegram.ext import Updater, CommandHandler, CallbackContext
-import requests
-from bs4 import BeautifulSoup
+import os
+from telegram.ext import Updater, CommandHandler
 
-# 🔑 Pon aquí tu token de BotFather
-TOKEN = '8350003914:AAF8US3eE_moPR98Pvao-ig5ShllWyZKvKs'
+TOKEN = os.getenv("TOKEN")  # Render leerá el valor aquí
 
+def start(update, context):
+    update.message.reply_text("¡Hola! Soy tu bot de titulares 🔎")
+
+def main():
+    updater = Updater(TOKEN, use_context=True)
+    dp = updater.dispatcher
+    dp.add_handler(CommandHandler("start", start))
+
+    updater.start_polling()
+    updater.idle()
+
+if __name__ == "__main__":
+    main()
 # ✅ Lista de RSS ecuatorianos
 RSS_FEEDS = [
     'https://www.elcomercio.com/rss/portada.xml',
